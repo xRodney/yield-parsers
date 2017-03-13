@@ -16,10 +16,10 @@ def test_two_requests_whole():
 
     assert len(parsed_messages) == 2
     for parsed_message in parsed_messages:
-        assert parsed_message.headers['Host'] == "www.example.com"
+        assert parsed_message.headers[b'Host'] == b"www.example.com"
         assert parsed_message.body == None
-        assert parsed_message.method == "GET"
-        assert parsed_message.path == "/"
+        assert parsed_message.method == b"GET"
+        assert parsed_message.path == b"/"
 
 
 def test_two_requests_in_pieces():
@@ -34,10 +34,10 @@ def test_two_requests_in_pieces():
 
     assert len(parsed_messages) == 2
     for parsed_message in parsed_messages:
-        assert parsed_message.headers['Host'] == "www.example.com"
+        assert parsed_message.headers[b'Host'] == b"www.example.com"
         assert parsed_message.body == None
-        assert parsed_message.method == "GET"
-        assert parsed_message.path == "/"
+        assert parsed_message.method == b"GET"
+        assert parsed_message.path == b"/"
 
 
 def test_two_responses_whole():
@@ -53,7 +53,7 @@ def test_two_responses_whole():
 
     assert len(parsed_messages) == 2
     for parsed_message in parsed_messages:
-        assert parsed_message.headers['Content-Type'] == "text/plain; charset=utf-8"
+        assert parsed_message.headers[b'Content-Type'] == b"text/plain; charset=utf-8"
         assert parsed_message.body == b"abcd\r\n"
 
 
@@ -68,7 +68,7 @@ def test_one_response_no_length():
 
     assert len(parsed_messages) == 1
     for parsed_message in parsed_messages:
-        assert parsed_message.headers['Content-Type'] == "text/plain; charset=utf-8"
+        assert parsed_message.headers[b'Content-Type'] == b"text/plain; charset=utf-8"
         assert parsed_message.body == b"abcd\r\n"
 
 
@@ -89,7 +89,7 @@ def test_two_responses_in_pieces():
 
     assert len(parsed_messages) == 3
     for parsed_message in parsed_messages:
-        assert parsed_message.headers['Content-Type'] == "text/plain; charset=utf-8"
+        assert parsed_message.headers[b'Content-Type'] == b"text/plain; charset=utf-8"
         assert parsed_message.body == b"abcd\r\n"
 
 
@@ -113,7 +113,7 @@ def test_one_response_chunked_whole():
     parsed_messages = parse(parser, msg)
     assert len(parsed_messages) == 1
     for parsed_message in parsed_messages:
-        assert parsed_message.headers['Content-Type'] == "text/plain; charset=utf-8"
+        assert parsed_message.headers[b'Content-Type'] == b"text/plain; charset=utf-8"
         assert parsed_message.body == b"Wikipedia in\r\n\r\nchunks."
 
 
@@ -142,7 +142,7 @@ def test_one_response_chunked_in_parts():
 
     assert len(parsed_messages) == 1
     for parsed_message in parsed_messages:
-        assert parsed_message.headers['Content-Type'] == "text/plain; charset=utf-8"
+        assert parsed_message.headers[b'Content-Type'] == b"text/plain; charset=utf-8"
         assert parsed_message.body == b"Wikipedia in\r\n\r\nchunks."
 
 
@@ -168,7 +168,7 @@ def test_two_responses_chunked():
 
     assert len(parsed_messages) == 2
     for parsed_message in parsed_messages:
-        assert parsed_message.headers['Content-Type'] == "text/plain; charset=utf-8"
+        assert parsed_message.headers[b'Content-Type'] == b"text/plain; charset=utf-8"
         assert parsed_message.body == b"Wikipedia in\r\n\r\nchunks."
 
 
@@ -199,5 +199,5 @@ def test_two_responses_chunked_in_parts():
 
     assert len(parsed_messages) == 2
     for parsed_message in parsed_messages:
-        assert parsed_message.headers['Content-Type'] == "text/plain; charset=utf-8"
+        assert parsed_message.headers[b'Content-Type'] == b"text/plain; charset=utf-8"
         assert parsed_message.body == b"Wikipedia in\r\n\r\nchunks."
