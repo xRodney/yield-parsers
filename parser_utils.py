@@ -30,7 +30,7 @@ def intialize_parser(parser_func):
 
 
 def get_word(data: str):
-    if not data:
+    while not data:
         data = yield from get_more(data)
 
     lindex = 0
