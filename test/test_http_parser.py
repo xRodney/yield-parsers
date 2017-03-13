@@ -12,7 +12,7 @@ def test_two_requests_whole():
     msg = b"GET / HTTP/1.1\r\nHost: www.example.com\r\n\r\nGET / HTTP/1.1\r\nHost: www.example.com\r\n\r\n"
 
     parser = intialize_parser(http_parser.get_http_request)
-    parsed_messages = parse(parser, msg)
+    parsed_messages = list(parse(parser, msg))
 
     assert len(parsed_messages) == 2
     for parsed_message in parsed_messages:
@@ -49,7 +49,7 @@ def test_two_responses_whole():
 
     msg = msg * 2
     parser = intialize_parser(http_parser.get_http_request)
-    parsed_messages = parse(parser, msg)
+    parsed_messages = list(parse(parser, msg))
 
     assert len(parsed_messages) == 2
     for parsed_message in parsed_messages:
@@ -64,7 +64,7 @@ def test_one_response_no_length():
           b"abcd\r\n"
 
     parser = intialize_parser(http_parser.get_http_request)
-    parsed_messages = parse(parser, msg)
+    parsed_messages = list(parse(parser, msg))
 
     assert len(parsed_messages) == 1
     for parsed_message in parsed_messages:
@@ -110,7 +110,7 @@ def test_one_response_chunked_whole():
           b"\r\n"
 
     parser = intialize_parser(http_parser.get_http_request)
-    parsed_messages = parse(parser, msg)
+    parsed_messages = list(parse(parser, msg))
     assert len(parsed_messages) == 1
     for parsed_message in parsed_messages:
         assert parsed_message.headers[b'Content-Type'] == b"text/plain; charset=utf-8"
@@ -164,7 +164,7 @@ def test_two_responses_chunked():
 
     msg = msg * 2
     parser = intialize_parser(http_parser.get_http_request)
-    parsed_messages = parse(parser, msg)
+    parsed_messages = list(parse(parser, msg))
 
     assert len(parsed_messages) == 2
     for parsed_message in parsed_messages:

@@ -2,15 +2,13 @@ SPACES = [ord(x) for x in " \t\r\n"]
 
 
 def parse(parser, data):
-    results = []
-    first = parser.send(data)
-    if first:
-        results.append(first)
-    for x in parser:
-        if x is None:
-            break
-        results.append(x)
-    return results
+    result = parser.send(data)
+    if result is not None:
+        yield result
+    result = next(parser)
+    while result is not None:
+        yield result
+        result = next(parser)
 
 
 def get_main_loop(parser_func):
